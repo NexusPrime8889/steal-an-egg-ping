@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGG RADAR NEON | Roblox 3D Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue:#008cff;
+  --cyan:#00e5ff;
+  --bg:#05080e;
+  --panel:#0c1422;
+  --border:rgba(0,170,255,.25);
+  --muted:#91a8bd;
+}
+* {
+  box-sizing:border-box;
+  font-family:'Montserrat',sans-serif!important;
+}
+body {
+  margin:0;
+  background:radial-gradient(ellipse at top,#0c2038,var(--bg) 55%);
+  color:#f4faff;
+  min-height:100vh;
+}
+header {
+  border-bottom:1px solid var(--border);
+  background:rgba(5,8,14,.94);
+  position:sticky;
+  top:0;
+  z-index:5;
+  backdrop-filter:blur(12px);
+}
+nav {
+  max-width:1250px;
+  margin:auto;
+  padding:18px 22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.logo {
+  font-size:20px;
+  font-weight:900;
+  text-shadow:0 0 14px var(--blue);
+}
+.logo span {color:var(--cyan)}
+nav a {
+  color:#b8d4e9;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:800;
+}
+main {
+  max-width:1250px;
+  margin:auto;
+  padding:25px 20px 60px;
+}
+.hero {
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:27px;
+  background:linear-gradient(120deg,#102746,#080e19);
+}
+.hero h1 {
+  font-size:clamp(25px,5vw,42px);
+  font-weight:900;
+  margin:0;
+  text-shadow:0 0 15px #008cff;
+}
+.hero h1 span {color:var(--cyan)}
+.hero p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+}
+.profile {
+  display:flex;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  padding:17px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin-top:17px;
+}
+.avatar {
+  width:65px;
+  height:65px;
+  object-fit:cover;
+  border-radius:12px;
+  border:2px solid var(--blue);
+}
+.profile-info {flex:1}
+.profile-info strong {font-size:14px}
+.profile-info p {
+  color:var(--muted);
+  font-size:11px;
+  margin:5px 0 0;
+}
+.btn {
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  background:linear-gradient(90deg,#007bff,#00c8ff);
+  color:#00101b;
+  font-size:11px;
+  font-weight:900;
+  padding:11px 13px;
+  border:0;
+  border-radius:9px;
+  cursor:pointer;
+}
+.btn:disabled {opacity:.4;cursor:not-allowed}
+.section-title {margin:30px 0 15px}
+.section-title h2 {
+  font-size:22px;
+  margin:0 0 6px;
+  font-weight:900;
+}
+.section-title p {
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+}
+.filters {
+  display:grid;
+  grid-template-columns:2fr 1.3fr 1fr 1fr 1fr;
+  gap:10px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+}
+input,select {
+  width:100%;
+  min-width:0;
+  padding:12px;
+  background:#060d18;
+  color:white;
+  border:1px solid #1c3854;
+  border-radius:8px;
+  outline:none;
+  font-size:11px;
+}
+input:focus,select:focus {border-color:var(--cyan)}
+select option {background:#0c1422}
+.search-row {
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+.search-row input {flex:1}
+.status {
+  color:var(--muted);
+  font-size:11px;
+  margin:17px 2px;
+  line-height:1.7;
+}
+.status.error {color:#ff8b8b}
+.status.success {color:#62e8b2}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+}
+.card {
+  background:linear-gradient(150deg,#111e31,#080e18);
+  border:1px solid var(--border);
+  border-radius:13px;
+  overflow:hidden;
+  transition:.2s;
+}
+.card:hover {
+  transform:translateY(-4px);
+  border-color:var(--cyan);
+  box-shadow:0 8px 25px #008cff22;
+}
+.image {
+  height:165px;
+  background:#070f1b;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.image img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.placeholder {color:var(--cyan);font-size:35px}
+.details {padding:13px}
+.name {
+  font-size:12px;
+  font-weight:800;
+  min-height:34px;
+  line-height:1.5;
+}
+.creator {
+  color:var(--muted);
+  font-size:10px;
+  margin:7px 0;
+}
+.price {
+  color:var(--cyan);
+  font-size:14px;
+  font-weight:900;
+  margin:10px 0;
+}
+.card-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+.card-actions .btn {
+  width:100%;
+  font-size:9px;
+  padding:11px 5px;
+}
+.btn.preview {
+  color:var(--cyan);
+  background:#071827;
+  border:1px solid var(--blue);
+}
+.empty {
+  grid-column:1/-1;
+  text-align:center;
+  border:1px dashed var(--border);
+  padding:35px;
+  border-radius:13px;
+  color:var(--muted);
+  font-size:12px;
+}
+.more {
+  display:block;
+  margin:25px auto 0;
+  min-width:180px;
+}
+footer {
+  border-top:1px solid var(--border);
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* VISOR 3D */
+.modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(10px);
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  overflow-y:auto;
+}
+.modal.open {display:flex}
+.modal-box {
+  width:min(900px,100%);
+  background:#0b1422;
+  border:1px solid var(--blue);
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 0 40px #008cff35;
+}
+.modal-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:14px 17px;
+  border-bottom:1px solid var(--border);
+}
+.modal-head strong {
+  font-size:13px;
+  color:var(--cyan);
+}
+.close {
+  background:#17263a;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  width:36px;
+  height:36px;
+  font-size:20px;
+  cursor:pointer;
+}
+.tryon-stage {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:12px;
+  background:#060d18;
+}
+.tryon-view {
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:11px;
+  overflow:hidden;
+  background:#080f1b;
+}
+.tryon-label {
+  padding:10px;
+  color:var(--cyan);
+  font-size:10px;
+  font-weight:900;
+  border-bottom:1px solid var(--border);
+  letter-spacing:.5px;
+}
+.viewer {
+  width:100%;
+  height:390px;
+  background:#080f1b;
+  border:0;
+  display:block;
+}
+.viewer-note {
+  padding:12px 16px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+.modal-links {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  padding:0 16px 16px;
+}
+@media(max-width:900px) {
+  .grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .filters {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:600px) {
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .filters {grid-template-columns:repeat(2,minmax(0,1fr))}
+  nav {justify-content:center}
+  .tryon-stage {grid-template-columns:1fr}
+  .viewer {height:310px}
+}
+@media(max-width:360px) {
+  .grid,.filters {grid-template-columns:1fr}
+  .card-actions {grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+  <div class="logo">EGG RADAR <span>NEON</span></div>
+  <a href="https://www.roblox.com/catalog" target="_blank" rel="noopener">CATÁLOGO OFICIAL ↗</a>
+</nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>ROBLOX <span>3D MARKETPLACE</span></h1>
+    <p>Explora artículos de Roblox y visualízalos en 3D. Busca ropa, accesorios, animaciones y mucho más.</p>
+  </section>
+
+  <section class="profile">
+    <img id="avatar" class="avatar" alt="Avatar Roblox">
+    <div class="profile-info">
+      <strong>Caylus_bloxx9919</strong>
+      <p>EGG RADAR NEON · Catálogo 3D</p>
+    </div>
+    <a class="btn" href="https://www.roblox.com/users/profile?username=Caylus_bloxx9919" target="_blank" rel="noopener">MI PERFIL ↗</a>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>🛍️ CATÁLOGO DE ROBLOX</h2>
+      <p>Busca artículos y pulsa VISTA 3D para inspeccionarlos.</p>
+    </div>
+
+    <div class="filters">
+      <input id="keyword" placeholder="🔎 Buscar artículos...">
+
+      <select id="category">
+        <option value="1">Todos los artículos</option>
+        <option value="3">Ropa</option>
+        <option value="4">Partes del cuerpo</option>
+        <option value="5">Equipamiento</option>
+        <option value="11">Accesorios</option>
+        <option value="12">Animaciones</option>
+      </select>
+
+      <input id="minPrice" type="number" min="0" placeholder="Precio mínimo">
+      <input id="maxPrice" type="number" min="0" placeholder="Precio máximo">
+
+      <select id="sort">
+        <option value="0">Más relevantes</option>
+        <option value="1">Más favoritos</option>
+        <option value="2">Más vendidos</option>
+        <option value="4">Menor precio</option>
+        <option value="5">Mayor precio</option>
+      </select>
+    </div>
+
+    <div class="search-row">
+      <button class="btn" id="searchButton">BUSCAR ARTÍCULOS 🔎</button>
+      <button class="btn" id="resetButton" type="button">LIMPIAR</button>
+    </div>
+
+    <div id="status" class="status">Preparando catálogo...</div>
+    <div id="grid" class="grid"></div>
+    <button class="btn more" id="moreButton" hidden>CARGAR MÁS</button>
+  </section>
+</main>
+
+<!-- VENTANA DE VISTA 3D -->
+<div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-label="Vista previa 3D">
+  <div class="modal-box">
+    <div class="modal-head">
+      <strong id="previewTitle">VISTA PREVIA 3D</strong>
+      <button class="close" id="closePreview" aria-label="Cerrar">×</button>
+    </div>
+
+    <div class="tryon-stage">
+      <div class="tryon-view">
+        <div class="tryon-label">TU AVATAR · 3D</div>
+        <iframe
+          id="avatar3DFrame"
+          class="viewer"
+          title="Avatar Roblox en 3D"
+          allow="fullscreen; autoplay"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+      <div class="tryon-view">
+        <div class="tryon-label">ARTÍCULO SELECCIONADO · 3D</div>
+        <iframe
+          id="previewFrame"
+          class="viewer"
+          title="Artículo Roblox en 3D"
+          allow="fullscreen; autoplay"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="viewer-note">
+      Comparador visual: tu avatar y el artículo se muestran en 3D, uno al lado del otro. Este visor externo no equipa la prenda en tu avatar ni guarda cambios en tu cuenta. Arrastra para girar y usa el zoom si está disponible.
+    </div>
+
+    <div class="modal-links">
+      <a id="previewRobloxLink" class="btn" href="#" target="_blank" rel="noopener">ABRIR EN ROBLOX ↗</a>
+      <a class="btn preview" href="https://roembed.com/" target="_blank" rel="noopener">ACERCA DEL VISOR ↗</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  EGG RADAR NEON · ROBLOX 3D STORE
+  <p>Proyecto independiente. No afiliado oficialmente con Roblox Corporation.</p>
+</footer>
+
+<script>
+const API = "https://catalog.roblox.com/v1/search/items/details";
+const THUMBNAIL_API = "https://thumbnails.roblox.com/v1/assets";
+
+const keyword = document.getElementById("keyword");
+const category = document.getElementById("category");
+const minPrice = document.getElementById("minPrice");
+const maxPrice = document.getElementById("maxPrice");
+const sort = document.getElementById("sort");
+const grid = document.getElementById("grid");
+const statusBox = document.getElementById("status");
+const moreButton = document.getElementById("moreButton");
+const searchButton = document.getElementById("searchButton");
+
+let cursor = null;
+let loading = false;
+let currentRequest = 0;
+let robloxUserId = null;
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+function setStatus(message,type="") {
+  statusBox.textContent = message;
+  statusBox.className = "status " + type;
+}
+
+function makeItemURL(item) {
+  const id = item.id || item.itemId;
+  const name = String(item.name || "Roblox item");
+  return "https://www.roblox.com/catalog/" +
+    encodeURIComponent(id) + "/" +
+    encodeURIComponent(name.trim().replace(/\s+/g,"-"));
+}
+
+function makeCard(item,thumbnail) {
+  const id = Number(item.id || item.itemId);
+  const name = escapeHTML(item.name || "Artículo Roblox");
+  const creator = escapeHTML(item.creatorName || "Creador de Roblox");
+  const price = item.price;
+
+  const priceText = price === null || price === undefined
+    ? "Precio no disponible"
+    : Number(price) === 0 ? "Gratis" : Number(price).toLocaleString("es-ES") + " R$";
+
+  const safeName = escapeHTML(item.name || "Artículo Roblox");
+  const imageHTML = thumbnail
+    ? `<img src="${escapeHTML(thumbnail)}" alt="${name}" loading="lazy" onerror="this.style.display='none'">`
+    : `<div class="placeholder">✦</div>`;
+
+  return `
+    <article class="card">
+      <div class="image">${imageHTML}</div>
+      <div class="details">
+        <div class="name">${name}</div>
+        <div class="creator">Creador: ${creator}</div>
+        <div class="price">${priceText}</div>
+        <div class="card-actions">
+          <button class="btn preview" type="button" data-preview-id="${id}" data-preview-name="${safeName}">PROBAR 3D</button>
+          <a class="btn" href="${makeItemURL(item)}" target="_blank" rel="noopener">COMPRAR ↗</a>
+        </div>
+      </div>
+    </article>`;
+}
+
+/* Abrir visor 3D */
+function openPreview(assetId,itemName) {
+  if (!Number.isSafeInteger(Number(assetId)) || Number(assetId) <= 0) {
+    alert("No se encontró un ID válido para este artículo.");
+    return;
+  }
+
+  const modal = document.getElementById("previewModal");
+  const frame = document.getElementById("previewFrame");
+
+  document.getElementById("previewTitle").textContent =
+    "PROBADOR VISUAL · " + itemName;
+
+  document.getElementById("previewRobloxLink").href =
+    "https://www.roblox.com/catalog/" + assetId;
+
+  frame.src =
+    "https://roembed.com/item/" + assetId +
+    "?bg=transparent&anim=spin&orbitDist=8&drag=1&zoom=1";
+
+  const avatarFrame = document.getElementById("avatar3DFrame");
+  if (robloxUserId) {
+    avatarFrame.src =
+      "https://roembed.com/avatar/" + robloxUserId +
+      "?bg=transparent&anim=float&floor=0";
+  } else {
+    avatarFrame.src = "about:blank";
+  }
+
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closePreview() {
+  document.getElementById("previewModal").classList.remove("open");
+  document.getElementById("previewFrame").src = "about:blank";
+  document.getElementById("avatar3DFrame").src = "about:blank";
+  document.body.style.overflow = "";
+}
+
+document.getElementById("closePreview").addEventListener("click",closePreview);
+
+document.getElementById("previewModal").addEventListener("click",event => {
+  if (event.target.id === "previewModal") closePreview();
+});
+
+document.addEventListener("keydown",event => {
+  if (event.key === "Escape") closePreview();
+});
+
+async function loadThumbnails(items) {
+  const ids = items.map(item => item.id || item.itemId).filter(Boolean);
+  if (!ids.length) return {};
+
+  const params = new URLSearchParams({
+    assetIds:ids.join(","),
+    returnPolicy:"PlaceHolder",
+    size:"150x150",
+    format:"Png",
+    isCircular:"false"
+  });
+
+  try {
+    const response = await fetch(THUMBNAIL_API + "?" + params);
+    if (!response.ok) return {};
+    const data = await response.json();
+    const map = {};
+
+    (data.data || []).forEach(entry => {
+      map[entry.targetId] = entry.imageUrl;
+    });
+
+    return map;
+  } catch {
+    return {};
+  }
+}
+
+async function searchCatalog(loadMore=false) {
+  if (loading) return;
+
+  loading = true;
+  searchButton.disabled = true;
+  moreButton.disabled = true;
+
+  const requestNumber = ++currentRequest;
+
+  if (!loadMore) {
+    cursor = null;
+    grid.innerHTML = "";
+    moreButton.hidden = true;
+    setStatus("Buscando artículos en Roblox...");
+  } else {
+    setStatus("Cargando más artículos...");
+  }
+
+  try {
+    const params = new URLSearchParams({
+      Category:category.value,
+      Limit:"30",
+      SortType:sort.value
+    });
+
+    const searchTerm = keyword.value.trim();
+    const min = minPrice.value.trim();
+    const max = maxPrice.value.trim();
+
+    if (searchTerm) params.set("Keyword",searchTerm);
+    if (min !== "") params.set("MinPrice",min);
+    if (max !== "") params.set("MaxPrice",max);
+    if (loadMore && cursor) params.set("Cursor",cursor);
+
+    const response = await fetch(API + "?" + params.toString());
+
+    if (!response.ok) {
+      throw new Error("Roblox respondió con el estado " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (requestNumber !== currentRequest) return;
+
+    const items = data.data || [];
+    cursor = data.nextPageCursor || null;
+
+    if (!items.length && !loadMore) {
+      grid.innerHTML = '<div class="empty">No se encontraron artículos. Prueba otra búsqueda.</div>';
+      setStatus("Búsqueda completada.");
+      return;
+    }
+
+    const thumbnails = await loadThumbnails(items);
+
+    if (requestNumber !== currentRequest) return;
+
+    grid.insertAdjacentHTML(
+      "beforeend",
+      items.map(item => {
+        const id = item.id || item.itemId;
+        return makeCard(item,thumbnails[id]);
+      }).join("")
+    );
+
+    const count = grid.querySelectorAll(".card").length;
+    setStatus(count + " artículos cargados desde Roblox.","success");
+    moreButton.hidden = !cursor;
+
+  } catch(error) {
+    console.error(error);
+    setStatus(
+      "No se pudo conectar con Roblox. Comprueba tu conexión e inténtalo de nuevo.",
+      "error"
+    );
+
+    if (!grid.children.length) {
+      grid.innerHTML = '<div class="empty">No se pudieron cargar los artículos. Puedes abrir el catálogo oficial de Roblox.</div>';
+    }
+  } finally {
+    loading = false;
+    searchButton.disabled = false;
+    moreButton.disabled = false;
+  }
+}
+
+searchButton.addEventListener("click",() => searchCatalog());
+
+grid.addEventListener("click",event => {
+  const button = event.target.closest("[data-preview-id]");
+  if (!button) return;
+  openPreview(Number(button.dataset.previewId),button.dataset.previewName || "Artículo Roblox");
+});
+
+keyword.addEventListener("keydown",event => {
+  if (event.key === "Enter") searchCatalog();
+});
+
+category.addEventListener("change",() => searchCatalog());
+sort.addEventListener("change",() => searchCatalog());
+
+minPrice.addEventListener("keydown",event => {
+  if (event.key === "Enter") searchCatalog();
+});
+maxPrice.addEventListener("keydown",event => {
+  if (event.key === "Enter") searchCatalog();
+});
+
+moreButton.addEventListener("click",() => searchCatalog(true));
+
+document.getElementById("resetButton").addEventListener("click",() => {
+  keyword.value = "";
+  category.value = "1";
+  minPrice.value = "";
+  maxPrice.value = "";
+  sort.value = "0";
+  searchCatalog();
+});
+
+async function loadAvatar() {
+  try {
+    const response = await fetch(
+      "https://users.roblox.com/v1/usernames/users",
+      {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          usernames:["Caylus_bloxx9919"],
+          excludeBannedUsers:true
+        })
+      }
+    );
+
+    const data = await response.json();
+    const user = data.data?.[0];
+    if (!user) return;
+    robloxUserId = user.id;
+
+    const thumbResponse = await fetch(
+      "https://thumbnails.roblox.com/v1/users/avatar?userIds=" +
+      user.id + "&size=150x150&format=Png&isCircular=false"
+    );
+
+    const thumbData = await thumbResponse.json();
+    const image = thumbData.data?.[0]?.imageUrl;
+
+    if (image) document.getElementById("avatar").src = image;
+  } catch(error) {
+    console.warn("No se pudo cargar el avatar:",error);
+  }
+}
+
+loadAvatar();
+searchCatalog();
+</script>
+</body>
+</html>
