@@ -1,0 +1,1321 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGG RADAR NEON</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #050812;
+  --panel: #0a1222;
+  --panel2: #0e1a30;
+  --blue: #078bff;
+  --cyan: #00d9ff;
+  --text: #f3f8ff;
+  --muted: #8295b3;
+  --border: #123b68;
+  --red: #ff4d70;
+  --purple: #bc78ff;
+  --green: #00e6a0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, #09204a 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button, input, select {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  height: 75px;
+  background: #080e1c;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 5px 25px #0008;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px var(--blue);
+  -webkit-text-stroke: .5px #00152e;
+}
+
+.logo span {
+  color: var(--cyan);
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #69758a;
+}
+
+.dot.online {
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.dot.error {
+  background: var(--red);
+  box-shadow: 0 0 12px var(--red);
+}
+
+.layout {
+  display: flex;
+  max-width: 1600px;
+  margin: auto;
+  min-height: calc(100vh - 75px);
+}
+
+.sidebar {
+  width: 225px;
+  flex-shrink: 0;
+  background: #080e1b;
+  border-right: 1px solid var(--border);
+  padding: 25px 14px;
+}
+
+.side-title {
+  font-size: 9px;
+  color: #617b9e;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 10px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.nav button {
+  text-align: left;
+  color: #9aacc7;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  transition: .2s;
+}
+
+.nav button:hover,
+.nav button.active {
+  color: white;
+  background: #10284a;
+  border-color: #087cff;
+  box-shadow: 0 0 15px #007bff25;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+}
+
+.page {
+  display: none;
+  animation: appear .25s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-heading {
+  margin-bottom: 25px;
+}
+
+.page-heading h1 {
+  font-size: clamp(23px, 3vw, 32px);
+  font-weight: 900;
+  text-shadow: 0 0 14px #087cff;
+  -webkit-text-stroke: .5px #001b3b;
+}
+
+.page-heading p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.card {
+  background: linear-gradient(145deg, #101e35, #080f1e);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 0 18px #006eff12;
+  min-width: 0;
+}
+
+.card-label {
+  color: #91a9cb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.card-value {
+  font-size: 28px;
+  font-weight: 900;
+  margin-top: 12px;
+  text-shadow: 0 0 12px #078bff;
+}
+
+.card-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.blue { color: var(--cyan); }
+.red { color: var(--red); }
+.purple { color: var(--purple); }
+.green { color: var(--green); }
+
+.panel {
+  background: linear-gradient(145deg, #0d192c, #080e19);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 19px;
+  margin-bottom: 18px;
+  box-shadow: 0 0 20px #006eff12;
+  min-width: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 17px;
+}
+
+.panel-title {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #42bfff;
+  text-shadow: 0 0 8px #007bff;
+}
+
+.small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 900;
+  background: #112b4c;
+  border: 1px solid #1766a9;
+  color: #63caff;
+}
+
+.badge.divine {
+  color: #ff738c;
+  border-color: #9e3150;
+  background: #391522;
+}
+
+.badge.eternal {
+  color: #d5a3ff;
+  border-color: #7746aa;
+  background: #28163c;
+}
+
+.badge.secret {
+  color: #4edaff;
+  border-color: #176f9b;
+  background: #102c40;
+}
+
+.empty {
+  padding: 35px 15px;
+  text-align: center;
+  color: #7186a6;
+  font-size: 11px;
+  line-height: 1.8;
+  border: 1px dashed #1b426c;
+  border-radius: 8px;
+}
+
+.empty strong {
+  display: block;
+  color: #a6c8ed;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.filter-btn,
+.action-btn {
+  border: 1px solid #1c4775;
+  background: #0c1b31;
+  color: #a8bedb;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.filter-btn.active,
+.action-btn.primary {
+  color: white;
+  background: #0756a8;
+  border-color: #1c9fff;
+  box-shadow: 0 0 12px #078bff35;
+}
+
+.action-btn:hover,
+.filter-btn:hover {
+  border-color: var(--cyan);
+  color: white;
+}
+
+input, select {
+  width: 100%;
+  background: #07101e;
+  color: white;
+  border: 1px solid #24466c;
+  border-radius: 7px;
+  padding: 12px;
+  font-size: 11px;
+  outline: none;
+  margin-top: 7px;
+}
+
+input:focus, select:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px #00aaff30;
+}
+
+label {
+  font-size: 10px;
+  color: #a7bdd9;
+  font-weight: 800;
+  display: block;
+  margin-top: 14px;
+}
+
+.egg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.egg {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px;
+  background: #0b1729;
+  border: 1px solid #193858;
+  border-radius: 9px;
+  min-width: 0;
+}
+
+.egg-image {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #132744;
+  object-fit: contain;
+}
+
+.egg-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.egg-name {
+  font-size: 12px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.egg-meta {
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 6px;
+  line-height: 1.7;
+}
+
+.egg-time {
+  font-size: 10px;
+  color: var(--cyan);
+  white-space: nowrap;
+}
+
+.alert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #1a304a;
+}
+
+.alert-row:last-child {
+  border: 0;
+}
+
+.alert-name {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.toggle {
+  width: 42px;
+  height: 23px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #34445b;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.slider:before {
+  content: "";
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: .2s;
+}
+
+.toggle input:checked + .slider {
+  background: #087bff;
+  box-shadow: 0 0 10px #087bff;
+}
+
+.toggle input:checked + .slider:before {
+  transform: translateX(19px);
+}
+
+.event-item {
+  background: #0b1729;
+  border: 1px solid #193858;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 9px;
+}
+
+.event-item h3 {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.event-item p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.notice {
+  background: #101c2d;
+  border: 1px solid #294566;
+  border-radius: 8px;
+  color: #a7bad3;
+  font-size: 10px;
+  padding: 13px;
+  line-height: 1.7;
+  margin-top: 15px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: #526987;
+  font-size: 9px;
+}
+
+@media(max-width: 850px) {
+  .layout { display: block; }
+  .sidebar {
+    width: 100%;
+    padding: 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .side-title { display: none; }
+  .nav {
+    flex-direction: row;
+    width: max-content;
+  }
+  .nav button { padding: 11px; }
+  main { padding: 18px; }
+}
+
+@media(max-width: 550px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .settings-grid { grid-template-columns: 1fr; }
+  header { padding: 0 15px; }
+  .logo { font-size: 17px; }
+  .egg { align-items: flex-start; }
+  .egg-time { white-space: normal; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">EGG <span>RADAR NEON</span></div>
+  <div class="connection">
+    <span class="dot" id="connectionDot"></span>
+    <span id="connectionText">SIN CONEXIÓN</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="side-title">MAIN MENU</div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard">◈ Dashboard</button>
+    <button data-page="stock">🥚 Live Egg Stock</button>
+    <button data-page="history">◷ Egg History</button>
+    <button data-page="alerts">♢ Egg Alerts</button>
+    <button data-page="events">✦ Events</button>
+    <button data-page="eventHistory">◷ Event History</button>
+    <button data-page="players">♙ Players Online</button>
+    <button data-page="settings">⚙ Settings</button>
+  </nav>
+</aside>
+
+<main>
+
+<!-- DASHBOARD -->
+<section class="page active" id="dashboard">
+  <div class="page-heading">
+    <h1>LIVE DASHBOARD</h1>
+    <p>Panel central de monitoreo de Steal an Egg.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-label">DIVINE REPORTS</div>
+      <div class="card-value red" id="divineCount">0</div>
+      <div class="card-sub">Reportes cargados</div>
+    </div>
+    <div class="card">
+      <div class="card-label">ETERNAL REPORTS</div>
+      <div class="card-value purple" id="eternalCount">0</div>
+      <div class="card-sub">Reportes cargados</div>
+    </div>
+    <div class="card">
+      <div class="card-label">SECRET REPORTS</div>
+      <div class="card-value blue" id="secretCount">0</div>
+      <div class="card-sub">Reportes cargados</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-label">TOTAL REPORTS</div>
+      <div class="card-value" id="totalCount">0</div>
+      <div class="card-sub">Apariciones recibidas</div>
+    </div>
+    <div class="card">
+      <div class="card-label">PLAYERS ONLINE</div>
+      <div class="card-value green" id="playersCount">--</div>
+      <div class="card-sub">Según la fuente conectada</div>
+    </div>
+    <div class="card">
+      <div class="card-label">LAST UPDATE</div>
+      <div class="card-value blue" id="lastUpdate" style="font-size:17px">--:--:--</div>
+      <div class="card-sub">Última consulta</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">⚡ LIVE EGG STOCK</div>
+      <span class="badge">LIVE FEED</span>
+    </div>
+    <div class="egg-list" id="dashboardEggs">
+      <div class="empty">
+        <strong>NO HAY DATOS TODAVÍA</strong>
+        Configura una fuente de datos en Settings.
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">✦ ACTIVE EVENTS</div>
+    <div id="dashboardEvents" class="empty">
+      No hay eventos cargados.
+    </div>
+  </div>
+</section>
+
+<!-- LIVE STOCK -->
+<section class="page" id="stock">
+  <div class="page-heading">
+    <h1>LIVE EGG STOCK</h1>
+    <p>Reportes recientes de huevos y apariciones.</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">LIVE FEED</div>
+      <span class="badge">ACTUALIZACIÓN AUTOMÁTICA</span>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="ALL">Todos</button>
+      <button class="filter-btn" data-filter="DIVINE">Divine</button>
+      <button class="filter-btn" data-filter="ETERNAL">Eternal</button>
+      <button class="filter-btn" data-filter="SECRET">Secret</button>
+    </div>
+    <div class="egg-list" id="stockList">
+      <div class="empty">Esperando reportes...</div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="page" id="history">
+  <div class="page-heading">
+    <h1>EGG HISTORY</h1>
+    <p>Historial de apariciones recibidas de la fuente conectada.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">REPORT HISTORY</div>
+      <span class="badge">ÚLTIMOS 100</span>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="ALL">Todos</button>
+      <button class="filter-btn" data-filter="DIVINE">Divine</button>
+      <button class="filter-btn" data-filter="ETERNAL">Eternal</button>
+      <button class="filter-btn" data-filter="SECRET">Secret</button>
+    </div>
+    <div class="egg-list" id="historyList">
+      <div class="empty">Todavía no hay historial.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERTS -->
+<section class="page" id="alerts">
+  <div class="page-heading">
+    <h1>EGG ALERTS</h1>
+    <p>Configura tus notificaciones por rareza.</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">RARITY NOTIFICATIONS</div>
+
+    <div class="alert-row">
+      <div>
+        <div class="alert-name red">DIVINE ALERT</div>
+        <div class="small">Avisar cuando aparezca Divine.</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="alertDivine" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="alert-row">
+      <div>
+        <div class="alert-name purple">ETERNAL ALERT</div>
+        <div class="small">Avisar cuando aparezca Eternal.</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="alertEternal" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="alert-row">
+      <div>
+        <div class="alert-name blue">SECRET ALERT</div>
+        <div class="small">Avisar cuando aparezca Secret.</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="alertSecret" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">SOUND SETTINGS</div>
+
+    <label for="volume">Volumen de alertas</label>
+    <input type="range" id="volume" min="0" max="100" value="80">
+
+    <label for="soundDivine">Sonido original Divine (archivo de audio)</label>
+    <input type="url" id="soundDivine" placeholder="URL del sonido Divine">
+
+    <label for="soundEternal">Sonido original Eternal (archivo de audio)</label>
+    <input type="url" id="soundEternal" placeholder="URL del sonido Eternal">
+
+    <label for="soundSecret">Sonido original Secret (archivo de audio)</label>
+    <input type="url" id="soundSecret" placeholder="URL del sonido Secret">
+
+    <button class="action-btn primary" id="saveSoundSettings" style="margin-top:15px">
+      GUARDAR SONIDOS
+    </button>
+
+    <button class="action-btn" id="testSound" style="margin-top:15px">
+      PROBAR SONIDO DIVINE
+    </button>
+
+    <button class="action-btn" id="enableNotifications" style="margin-top:15px">
+      ACTIVAR NOTIFICACIONES DEL NAVEGADOR
+    </button>
+
+    <div class="notice">
+      Los sonidos originales todavía no están incluidos. Añade archivos de audio legítimos que tengas permiso para utilizar. Chrome puede exigir una interacción del usuario antes de reproducir audio.
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="page" id="events">
+  <div class="page-heading">
+    <h1>LIVE EVENTS</h1>
+    <p>Eventos activos recibidos desde la fuente de datos.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-title">ACTIVE EVENTS</div>
+    <div id="eventList" class="empty">Esperando eventos...</div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">EVENT TIMERS</div>
+    <div id="timerList" class="empty">No hay temporizadores disponibles.</div>
+  </div>
+</section>
+
+<!-- EVENT HISTORY -->
+<section class="page" id="eventHistory">
+  <div class="page-heading">
+    <h1>EVENT HISTORY</h1>
+    <p>Historial de eventos reportados.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-title">PREVIOUS EVENTS</div>
+    <div id="eventHistoryList" class="empty">No hay historial de eventos.</div>
+  </div>
+</section>
+
+<!-- PLAYERS -->
+<section class="page" id="players">
+  <div class="page-heading">
+    <h1>PLAYERS ONLINE</h1>
+    <p>Información de jugadores proporcionada por la fuente.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-title">PLAYER STATISTICS</div>
+    <div class="card-value green" id="playersBig">--</div>
+    <div class="card-sub">Jugadores en línea reportados</div>
+    <div class="notice">
+      Esta sección solo mostrará datos si eggPing o el proveedor conectado los proporciona. No accede a los jugadores de tu servidor privado de Roblox.
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="page" id="settings">
+  <div class="page-heading">
+    <h1>SETTINGS</h1>
+    <p>Conexión de datos y configuración general.</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">DATA SOURCE CONNECTION</div>
+
+    <label for="apiUrl">URL de la API o feed público</label>
+    <input type="url" id="apiUrl" placeholder="https://tu-api-publica.com/eggs">
+
+    <label for="refreshSeconds">Intervalo de actualización (segundos)</label>
+    <input type="number" id="refreshSeconds" min="15" max="600" value="30">
+
+    <button class="action-btn primary" id="saveConnection" style="margin-top:15px">
+      GUARDAR Y CONECTAR
+    </button>
+
+    <button class="action-btn" id="refreshNow" style="margin-top:15px">
+      ACTUALIZAR AHORA
+    </button>
+
+    <div class="notice">
+      La URL real de eggPing todavía no está confirmada. No escribas una URL inventada: primero debemos identificar su endpoint. El servidor debe permitir solicitudes CORS desde GitHub Pages.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">EXPECTED DATA FORMAT</div>
+    <p class="small">La conexión está preparada para recibir una respuesta JSON con esta estructura:</p>
+    <pre style="white-space:pre-wrap;overflow-wrap:anywhere;color:#6bcaff;font-size:10px;line-height:1.7;margin-top:14px">{
+  "eggs": [
+    {
+      "id": "unique-id",
+      "name": "Egg Name",
+      "rarity": "DIVINE",
+      "image": "https://example.com/image.png",
+      "player": "PlayerName",
+      "time": "2026-11-11T20:30:00Z",
+      "mutation": "Golden"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-id",
+      "name": "Event Name",
+      "description": "Event details",
+      "active": true,
+      "endsAt": "2026-11-11T23:00:00Z"
+    }
+  ],
+  "eventHistory": [],
+  "playersOnline": 120,
+  "nextSpawnAt": "2026-11-11T23:05:00Z"
+}</pre>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">LOCAL CONFIGURATION</div>
+    <button class="action-btn" id="clearCache">BORRAR CONFIGURACIÓN LOCAL</button>
+  </div>
+</section>
+
+<footer>
+  EGG RADAR NEON · INDEPENDENT COMMUNITY INTERFACE
+</footer>
+
+</main>
+</div>
+
+<script>
+/* ==========================================
+   EGG RADAR NEON
+   Fuente externa configurable.
+   No inventa reportes ni genera datos falsos.
+========================================== */
+
+const $ = id => document.getElementById(id);
+
+const STORAGE_KEY = "eggRadarNeonSettings";
+
+let settings = {
+  apiUrl: "",
+  refreshSeconds: 30,
+  volume: 80,
+  sounds: {
+    DIVINE: "",
+    ETERNAL: "",
+    SECRET: ""
+  },
+  alerts: {
+    DIVINE: true,
+    ETERNAL: true,
+    SECRET: true
+  }
+};
+
+let eggs = [];
+let events = [];
+let eventHistory = [];
+let playersOnline = null;
+let nextSpawnAt = null;
+let currentFilter = "ALL";
+let seenIds = new Set();
+let refreshTimer = null;
+let lastRequestSucceeded = false;
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    settings = {
+      ...settings,
+      ...saved,
+      sounds: {...settings.sounds, ...(saved.sounds || {})},
+      alerts: {...settings.alerts, ...(saved.alerts || {})}
+    };
+  } catch(e) {}
+
+  $("apiUrl").value = settings.apiUrl;
+  $("refreshSeconds").value = settings.refreshSeconds;
+  $("volume").value = settings.volume;
+
+  $("soundDivine").value = settings.sounds.DIVINE;
+  $("soundEternal").value = settings.sounds.ETERNAL;
+  $("soundSecret").value = settings.sounds.SECRET;
+
+  $("alertDivine").checked = settings.alerts.DIVINE;
+  $("alertEternal").checked = settings.alerts.ETERNAL;
+  $("alertSecret").checked = settings.alerts.SECRET;
+}
+
+function saveSettings() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+}
+
+function setConnection(status, message) {
+  $("connectionDot").className = "dot " + status;
+  $("connectionText").textContent = message;
+}
+
+function navigate(page) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.toggle("active", p.id === page);
+  });
+
+  document.querySelectorAll(".nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === page);
+  });
+}
+
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", () => navigate(button.dataset.page));
+});
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const group = button.parentElement;
+    group.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    currentFilter = button.dataset.filter;
+    renderEggs();
+  });
+});
+
+function normalizeRarity(value) {
+  const r = String(value || "").toUpperCase();
+
+  if (r.includes("DIVINE")) return "DIVINE";
+  if (r.includes("ETERNAL")) return "ETERNAL";
+  if (r.includes("SECRET")) return "SECRET";
+
+  return r || "UNKNOWN";
+}
+
+function safeText(value, fallback = "Unknown") {
+  return value === undefined || value === null || value === ""
+    ? fallback
+    : String(value);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function rarityBadge(rarity) {
+  const r = normalizeRarity(rarity);
+  const cls = ["DIVINE", "ETERNAL", "SECRET"].includes(r) ? r.toLowerCase() : "";
+  return `<span class="badge ${cls}">${escapeHTML(r)}</span>`;
+}
+
+function formatTime(value) {
+  if (!value) return "--";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return escapeHTML(value);
+  return date.toLocaleString();
+}
+
+function makeEggCard(egg) {
+  const name = escapeHTML(safeText(egg.name));
+  const rarity = normalizeRarity(egg.rarity);
+  const mutation = escapeHTML(safeText(egg.mutation, "No mutation"));
+  const player = escapeHTML(safeText(egg.player, "Unknown"));
+  const time = formatTime(egg.time || egg.timestamp || egg.createdAt);
+  const image = egg.image ? escapeHTML(egg.image) : "";
+
+  const img = image
+    ? `<img class="egg-image" src="${image}" alt="${name}" loading="lazy" onerror="this.style.display='none'">`
+    : `<div class="egg-image"></div>`;
+
+  return `
+    <article class="egg">
+      ${img}
+      <div class="egg-info">
+        <div class="egg-name">${name}</div>
+        <div style="margin-top:6px">${rarityBadge(rarity)}</div>
+        <div class="egg-meta">
+          Mutation: ${mutation}<br>
+          Player: ${player}<br>
+          Appeared: ${time}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderEggs() {
+  const filtered = currentFilter === "ALL"
+    ? eggs
+    : eggs.filter(e => normalizeRarity(e.rarity) === currentFilter);
+
+  const html = filtered.length
+    ? filtered.map(makeEggCard).join("")
+    : `<div class="empty"><strong>NO REPORTS FOUND</strong>No hay apariciones para este filtro.</div>`;
+
+  $("dashboardEggs").innerHTML = eggs.length
+    ? eggs.slice(0, 5).map(makeEggCard).join("")
+    : `<div class="empty"><strong>NO LIVE REPORTS</strong>Esperando datos reales de la fuente.</div>`;
+
+  $("stockList").innerHTML = html;
+  $("historyList").innerHTML = html;
+
+  $("divineCount").textContent = eggs.filter(e => normalizeRarity(e.rarity) === "DIVINE").length;
+  $("eternalCount").textContent = eggs.filter(e => normalizeRarity(e.rarity) === "ETERNAL").length;
+  $("secretCount").textContent = eggs.filter(e => normalizeRarity(e.rarity) === "SECRET").length;
+  $("totalCount").textContent = eggs.length;
+}
+
+function renderEvents() {
+  const active = events.filter(e => e.active !== false);
+
+  const eventHTML = list => list.length
+    ? list.map(e => `
+      <div class="event-item">
+        <h3>${escapeHTML(safeText(e.name, "Event"))}</h3>
+        <p>${escapeHTML(safeText(e.description, "No description"))}</p>
+        ${e.endsAt ? `<p>Ends: ${formatTime(e.endsAt)}</p>` : ""}
+      </div>
+    `).join("")
+    : `<div class="empty">No hay eventos disponibles.</div>`;
+
+  $("dashboardEvents").innerHTML = eventHTML(active);
+  $("eventList").innerHTML = eventHTML(active);
+  $("eventHistoryList").innerHTML = eventHTML(eventHistory);
+
+  $("timerList").innerHTML = active.some(e => e.endsAt)
+    ? active.filter(e => e.endsAt).map(e => `
+      <div class="event-item">
+        <h3>${escapeHTML(safeText(e.name, "Event"))}</h3>
+        <p>Tiempo restante: <strong class="blue" data-countdown="${escapeHTML(e.endsAt)}">Calculando...</strong></p>
+      </div>
+    `).join("")
+    : `<div class="empty">No hay temporizadores disponibles.</div>`;
+}
+
+function updateCountdowns() {
+  document.querySelectorAll("[data-countdown]").forEach(el => {
+    const end = new Date(el.dataset.countdown).getTime();
+    const diff = end - Date.now();
+
+    if (Number.isNaN(end)) {
+      el.textContent = "--";
+      return;
+    }
+
+    if (diff <= 0) {
+      el.textContent = "Finalizado";
+      return;
+    }
+
+    const hours = Math.floor(diff / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+
+    el.textContent =
+      `${String(hours).padStart(2,"0")}:` +
+      `${String(mins).padStart(2,"0")}:` +
+      `${String(secs).padStart(2,"0")}`;
+  });
+}
+
+function getEggId(egg) {
+  return String(
+    egg.id ||
+    egg.reportId ||
+    egg.uuid ||
+    [
+      egg.name,
+      egg.rarity,
+      egg.time || egg.timestamp || egg.createdAt
+    ].join("_")
+  );
+}
+
+function notifyNewEgg(egg) {
+  const rarity = normalizeRarity(egg.rarity);
+
+  if (!settings.alerts[rarity]) return;
+
+  const name = safeText(egg.name, "New egg");
+
+  if ("Notification" in window && Notification.permission === "granted") {
+    try {
+      new Notification(`EGG RADAR - ${rarity}`, {
+        body: `${name} has appeared!`,
+        icon: egg.image || undefined
+      });
+    } catch(e) {}
+  }
+
+  const soundURL = settings.sounds[rarity];
+
+  if (soundURL) {
+    try {
+      const audio = new Audio(soundURL);
+      audio.volume = Math.max(0, Math.min(1, settings.volume / 100));
+      audio.play().catch(() => {});
+    } catch(e) {}
+  }
+}
+
+function processData(data) {
+  if (!data || typeof data !== "object") {
+    throw new Error("La respuesta no es un objeto JSON válido.");
+  }
+
+  if (!Array.isArray(data.eggs)) {
+    throw new Error("No se encontró el array 'eggs' en la respuesta.");
+  }
+
+  const incoming = data.eggs.slice(0, 100);
+
+  const firstLoad = seenIds.size === 0;
+
+  incoming.forEach(egg => {
+    const id = getEggId(egg);
+
+    if (!seenIds.has(id)) {
+      if (!firstLoad) notifyNewEgg(egg);
+      seenIds.add(id);
+    }
+  });
+
+  eggs = incoming;
+
+  // Limita el conjunto de IDs para evitar crecimiento ilimitado.
+  if (seenIds.size > 500) {
+    seenIds = new Set(incoming.map(getEggId));
+  }
+
+  events = Array.isArray(data.events) ? data.events : [];
+  eventHistory = Array.isArray(data.eventHistory) ? data.eventHistory : [];
+
+  playersOnline = data.playersOnline ?? null;
+  nextSpawnAt = data.nextSpawnAt ?? null;
+
+  $("playersCount").textContent = playersOnline ?? "--";
+  $("playersBig").textContent = playersOnline ?? "--";
+  $("lastUpdate").textContent = new Date().toLocaleTimeString();
+
+  renderEggs();
+  renderEvents();
+  updateCountdowns();
+}
+
+async function fetchData() {
+  if (!settings.apiUrl) {
+    setConnection("", "SIN CONEXIÓN");
+    return;
+  }
+
+  try {
+    const response = await fetch(settings.apiUrl, {
+      method: "GET",
+      headers: { "Accept": "application/json" },
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    processData(data);
+
+    lastRequestSucceeded = true;
+    setConnection("online", "CONNECTED");
+  } catch (error) {
+    console.error("Egg Radar connection:", error);
+    lastRequestSucceeded = false;
+    setConnection("error", "CONNECTION ERROR");
+  }
+}
+
+function restartPolling() {
+  if (refreshTimer) clearInterval(refreshTimer);
+
+  fetchData();
+
+  const seconds = Math.max(
+    15,
+    Math.min(600, Number(settings.refreshSeconds) || 30)
+  );
+
+  refreshTimer = setInterval(fetchData, seconds * 1000);
+}
+
+$("saveConnection").addEventListener("click", () => {
+  settings.apiUrl = $("apiUrl").value.trim();
+  settings.refreshSeconds = Number($("refreshSeconds").value) || 30;
+  saveSettings();
+  restartPolling();
+});
+
+$("refreshNow").addEventListener("click", fetchData);
+
+$("saveSoundSettings").addEventListener("click", () => {
+  settings.sounds.DIVINE = $("soundDivine").value.trim();
+  settings.sounds.ETERNAL = $("soundEternal").value.trim();
+  settings.sounds.SECRET = $("soundSecret").value.trim();
+
+  settings.volume = Number($("volume").value);
+
+  settings.alerts.DIVINE = $("alertDivine").checked;
+  settings.alerts.ETERNAL = $("alertEternal").checked;
+  settings.alerts.SECRET = $("alertSecret").checked;
+
+  saveSettings();
+  alert("Configuración de alertas guardada.");
+});
+
+$("volume").addEventListener("input", () => {
+  settings.volume = Number($("volume").value);
+  saveSettings();
+});
+
+["Divine", "Eternal", "Secret"].forEach(name => {
+  $("alert" + name).addEventListener("change", event => {
+    settings.alerts[name.toUpperCase()] = event.target.checked;
+    saveSettings();
+  });
+});
+
+$("testSound").addEventListener("click", () => {
+  const url = settings.sounds.DIVINE || $("soundDivine").value.trim();
+
+  if (!url) {
+    alert("Primero añade el archivo de sonido Divine.");
+    return;
+  }
+
+  const audio = new Audio(url);
+  audio.volume = Number($("volume").value) / 100;
+  audio.play().catch(() => alert("El navegador no pudo reproducir el audio."));
+});
+
+$("enableNotifications").addEventListener("click", async () => {
+  if (!("Notification" in window)) {
+    alert("Este navegador no admite notificaciones.");
+    return;
+  }
+
+  const permission = await Notification.requestPermission();
+
+  alert(
+    permission === "granted"
+      ? "Notificaciones activadas."
+      : "No se concedió permiso para notificaciones."
+  );
+});
+
+$("clearCache").addEventListener("click", () => {
+  if (!confirm("¿Borrar toda la configuración guardada?")) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+});
+
+loadSettings();
+renderEggs();
+renderEvents();
+restartPolling();
+
+setInterval(updateCountdowns, 1000);
+</script>
+
+</body>
+</html>
